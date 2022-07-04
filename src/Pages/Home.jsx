@@ -78,7 +78,6 @@ if(loading){
     return(
     <div className="justify-content-center">
         <HeaderHome handleChange={handleChange} handleClick={handleClick} />
-
         <div id="home">
         <Row className="mx-2">    
             {resultado.map(pelicula => {   
