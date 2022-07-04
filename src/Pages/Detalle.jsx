@@ -1,34 +1,30 @@
 import React, {useEffect, useState} from "react";
 import { getById } from "../Services/PeliculasServices";
 import LoadingSpinner from "../Components/Spinner";
-import {Link} from "react-router-dom";
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import { Table , Button, Container } from "react-bootstrap";
-
-
-//*En este componente tengo que recibir el dato del id para poder mostrar el detalle solo de ese producto
 
 function Detalle(){
     const [pelicula, setPelicula] = useState({});
-    const [loading, setLoading] = useState(true); //*Creamos un hook para el "Cargando..."
-    const {id} = useParams(); //*Recibo el id con el nombre que le puse en el RUTEO y lo guardo en esa constante
+    const [loading, setLoading] = useState(true);
+    const {id} = useParams(); 
     let imgSrc = `https://image.tmdb.org/t/p/w185_and_h278_bestv2/${pelicula.poster_path}`;
 
 useEffect(
     () => {
-        const request = async () => {  //*Declaro aca mi funcion async porq el useeffect no medeja
+        const request = async () => { 
             try{
                 const response = await getById(id);
                 if(response){
                     setPelicula(response);
                     setLoading(false);
                 }            
-            }catch (e) {   //*En caso de que uno de mis .then falle..
+            }catch (e) {  
                 console.log(e);
             }
         }
         request();
-    }, [id]   //* le voy a pasar el id al array de useEffect
+    }, [id]  
 )
 
 if(loading){
@@ -39,20 +35,20 @@ if(loading){
     return(
         <div>
             <header className="m-4 text-danger">
-                <span className="display-5">
+                <span className="fs-3">
                     {pelicula.title}
                 </span>
             </header>
             <Container fluid className="d-flex flex-row col-8">              
                 <img src={imgSrc} className="me-2 col-3" alt="poster-movie"/>
-                <Table striped bordered variant="dark" className="me-5">
+                <Table striped bordered variant="dark" className="me-5 text-center">
                     <thead>
                         <tr className="p-2">
                             <th>
                                 <span> Título original </span>
                             </th>
-                            <th >
-                                <span> "{pelicula.original_title}" </span>
+                            <th>
+                                <span className="m-4 fst-italic lh-lg"> "{pelicula.original_title}" </span>
                             </th>
                         </tr>
                     </thead>
@@ -74,7 +70,7 @@ if(loading){
                     </tbody>
                 </Table>  
                 </Container>             
-                <Button className="btnCard btn-danger text-white btn-lg" as={Link} to={'/'}> Volver a Inicio </Button>
+                <Button className="btnCard btn-danger text-white" as={Link} to={'/'}> Volver a Inicio </Button>
         </div>
     )
 }

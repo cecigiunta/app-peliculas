@@ -1,30 +1,28 @@
-import React , {useState, useEffect} from "react";
+import React  from "react";
 import {Link} from "react-router-dom";
-import {Col} from "react-bootstrap";
-import {Button} from "react-bootstrap";
+import {Card, Button, Col} from "react-bootstrap";
 
 function Pelicula(props){
-let imgSrc = `https://image.tmdb.org/t/p/w185_and_h278_bestv2/${props.datos.poster_path}`;
-const {datos} = props;   //*Los datos q recibo de "Home"
+    const {datos} = props;
+    let imgSrc = `https://image.tmdb.org/t/p/w185_and_h278_bestv2/${datos.poster_path}`;
     return(
-        <Col>
-        <div>
-            <div className="cardStyle card bg-dark">
-                <img src={imgSrc} className="card-img-top imgMovie" alt="poster-movie"/>
-                <div className="card-body">
-                    <h5 className="card-title bg-dark">{datos.title}</h5>
+        <Col className="mx-0">
+            <div>
+                <div className="cardStyle card bg-dark mb-2">
+                    <Card.Img variant="top" src={imgSrc}/>
+                    <Card.Body>
+                    <Card.Title className="fs-5 my-2">{datos.title}</Card.Title>
+                    <Card.Text>
+                        {datos.vote_average} <span className="fa fa-star orange"></span>
+                    </Card.Text>
+                    <Card.Text>
+                        {datos.release_date}
+                    </Card.Text>
+                    <Button className="btnCard btn-danger text-white" as={Link} to={'/movie/'+ datos.id}> Ver Detalle </Button>
+                    </Card.Body>
                 </div>
-                <ul className="list-group list-group-flush">
-                    <li className="list-group-item bg-dark text-white">Calificación: {datos.vote_average}</li>
-                    <li className="list-group-item bg-dark text-white">{datos.release_date}</li>
-                </ul>
-                <div className="card-body">
-                    <Button className="btnCard btn-danger text-white btn-lg" as={Link} to={'/movie/'+ datos.id}> Ver Detalle </Button>
-                </div>
-                </div>
-        </div>
+            </div>
         </Col>
     )
 }
-
 export default Pelicula;
